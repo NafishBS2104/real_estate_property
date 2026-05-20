@@ -5,9 +5,18 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <list string="Offers">
+
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
+                <button name="action_accept"
+                        type="object"
+                        icon="fa-check"
+                        string="Accept"/>
+                <button name="action_refuse"
+                        type="object"
+                        icon="fa-times"
+                        string="Refuse"/>
             </list>
         </field>
     </record>
