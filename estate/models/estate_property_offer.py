@@ -4,6 +4,14 @@ from datetime import timedelta
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Estate Property Offer"
+
+    _sql_constraints = [
+        (
+            "check_price",
+            "CHECK(price > 0)",
+            "The offer price must be strictly positive."
+        ),
+    ]
     validity = fields.Integer(default = 7)
     date_deadline = fields.Date(
         compute="_compute_date_deadline",
