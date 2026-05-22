@@ -5,6 +5,7 @@ from odoo.tools.float_utils import float_compare,float_is_zero
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Real Estate Property"
+    _order = "id desc"
 
 
     _sql_constraints = [
@@ -104,8 +105,6 @@ class EstateProperty(models.Model):
                 raise ValidationError(
                     "The Selling Price cannot be lower than 90% of the expected price."
                 )
-
-
 
 
     def action_sold(self):
