@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 from odoo.exceptions import UserError,ValidationError
+from odoo.api import ondelete
 from odoo.tools.float_utils import float_compare,float_is_zero
 
 class EstateProperty(models.Model):
@@ -105,6 +106,12 @@ class EstateProperty(models.Model):
                 raise ValidationError(
                     "The Selling Price cannot be lower than 90% of the expected price."
                 )
+
+    @ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_cancelled(self):
+        for property in self:
+            if property.state not in ('new','cancelled'):
+                raise UserError("Only new or cancelled property can be deleted.")
 
 
     def action_sold(self):

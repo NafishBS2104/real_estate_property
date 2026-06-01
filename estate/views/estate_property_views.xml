@@ -19,13 +19,13 @@
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
-                <field name="living_area" filter_domain="[('living_area','>=',self)]"/>
+                <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="date_availability" optional="hide"/>
                 <field name="property_type_id"/>
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                <field name="state" widget="statusbar" statusbar_visiable="new,offer_received,offer_accepted,sold"/>
+                <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
             </list>
         </field>
     </record>
@@ -44,7 +44,7 @@
                             type="object"
                             string="Sold"
                             class="btn-primary"
-                            invisiable="state in ('sold' , 'cancelled')"/>
+                            invisible="state in ('sold' , 'cancelled')"/>
                     <button name="action_cancel"
                             type="object"
                             string="cancel"
@@ -91,7 +91,7 @@
 
 
                           <page string="Offers">
-                              <field name="offer_ids" readonly="state in ('offer_accepted','sold','cancelled')">
+                              <field name="offer_ids" readonly="state in ['offer_accepted','sold','cancelled']">
                                   <list>
                                       <field name="price"/>
                                       <field name="partner_id"/>
@@ -103,12 +103,12 @@
                                               type="object"
                                               icon="fa-check"
                                               string="Accept"
-                                              invisiable="status in ('accepted','refused')"/>
+                                              invisible="status in ('accepted','refused')"/>
                                       <button name="action_refuse"
                                               type="object"
                                               icon="fa-times"
                                               string="Refuse"
-                                              invisiable="status in ('accepted','refused')"/>
+                                              invisible="status in ('accepted','refused')"/>
                                   </list>
                               </field>
                           </page>
