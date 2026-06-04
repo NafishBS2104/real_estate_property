@@ -4,6 +4,13 @@ from datetime import timedelta
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Estate Property Offer"
+    _order = "price desc"
+
+    property_type_id = fields.Many2one(
+        "estate.property.type",
+        related="property_id.property_type_id",
+        store = True
+    )
 
     _sql_constraints = [
         (
@@ -22,7 +29,7 @@ class EstatePropertyOffer(models.Model):
     status = fields.Selection(
         [
             ('accepted' , 'Accepted'),
-            ('rejected' ,  'Rejected'),
+            ('refused' ,  'Refused'),
         ],
         copy=False,
     )
@@ -33,12 +40,12 @@ class EstatePropertyOffer(models.Model):
     @api.depends("validity", "create_date")
     def _compute_date_deadline(self):
         for record in self:
-            create_date = record.create_date or fields.Date.today()
+            create_date = record.create_date.date() if record.create_date else fields.Date.today()
             record.date_deadline = create_date + timedelta(days=record.validity)
 
     def _inverse_date_deadline(self):
         for record in self:
-            create_date = record.create_date or fields.Date.today()
+            create_date = record.create_date.date() if record.create_date else fields.Date.today()
             record.validity = (record.date_deadline - create_date.date()).days
 
     def action_accept(self):
@@ -50,5 +57,5 @@ class EstatePropertyOffer(models.Model):
 
     def action_refuse(self):
         for record in self:
-            record.status = "rejected"
+            record.status = "refused"
         return True
