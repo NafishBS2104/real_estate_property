@@ -1,6 +1,12 @@
 from odoo import fields, models, api
 from odoo.exceptions import UserError,ValidationError
+from odoo.api import ondelete
 from odoo.tools.float_utils import float_compare,float_is_zero
+import io
+import json
+import xlsxwriter
+from odoo.tools import json_default
+
 
 class EstateProperty(models.Model):
     _name = "estate.property"
@@ -106,6 +112,12 @@ class EstateProperty(models.Model):
                     "The Selling Price cannot be lower than 90% of the expected price."
                 )
 
+    @ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_cancelled(self):
+        for property in self:
+            if property.state not in ('new','cancelled'):
+                raise UserError("Only new or cancelled property can be deleted.")
+
 
     def action_sold(self):
         for record in self:
@@ -120,3 +132,51 @@ class EstateProperty(models.Model):
                 raise UserError("A sold property cannot be cancelled.")
             record.state = "cancelled"
         return True
+
+    def action_print_xlsx(self):
+        self.ensure_one()
+        data = {
+            "name": self.name,
+            "expected_price": self.expected_price,
+            "selling_price": self.selling_price,
+            "state": self.state,
+        }
+        return{
+            "type": "ir.actions.report",
+            "data":{
+                "model": "estate.property",
+                "options": json.dumps(data,default=json_default),
+                "output_format": "xlsx",
+                "report_name": "Property Report",
+            },
+            "report_type": "xlsx",
+        }
+
+    def get_xlsx_report(self,data,response):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(
+            output,
+            {"in_memory": True}
+        )
+
+        sheet = workbook.add_worksheet("Property")
+        bold = workbook.add_format({"bold": True})
+
+
+        sheet.write(0,0,"Property Name", bold)
+        sheet.write(0,1,data.get("name",""))
+
+        sheet.write(1,0,"Expected Price", bold)
+        sheet.write(1,1,data.get("expected_price",0))
+
+        sheet.write(2,0,"Selling Price",bold)
+        sheet.write(2,1,data.get("selling_price",0))
+
+        sheet.write(3,0,"State",bold)
+        sheet.write(3,1,data["state"])
+
+        workbook.close()
+
+        output.seek(0)
+        response.stream.write(output.read())
+        output.close()
