@@ -5,6 +5,9 @@
         <div>
             <Counter/>
             <Counter/>
+            <h1>Card Example</h1>
+            <Card title="'This is example 1'" content="'This is example 1'"/>
+            <Card title="'This is example 2'" content="'This is example 2'"/>
         </div>
     </t>
 </templates>
