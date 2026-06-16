@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import {useState,Component,xml} from "@odoo/owl";
+import {Component, useState, useRef, onMounted, xml} from "@odoo/owl";
 import {TodoItem} from "./todo_item";
 
 
@@ -10,7 +10,8 @@ export class Todo extends Component{
             <input
                type="text"
                placeholder="Enter a new task"
-               t-on-keyup="addTodo"/>
+               t-on-keyup="addTodo"
+               t-ref="input"/>
 
                 <!-- Existing todo list -->
                 <t t-foreach="this.todos" t-as="todo" t-key="todo.id">
@@ -26,6 +27,13 @@ export class Todo extends Component{
     setup(){
         this.todos = useState([]);
         this.nextId = 1;
+
+        this.inputRef = useRef('input');
+        onMounted(() => {                    // ← Add this
+            if (this.inputRef.el) {
+                this.inputRef.el.focus();
+            }
+        });
     }
 
     addTodo(ev){
