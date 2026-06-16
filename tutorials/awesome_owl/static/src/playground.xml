@@ -2,12 +2,12 @@
 <templates xml:space="preserve">
 
     <t t-name="awesome_owl.playground">
-        <div>
+        <div id="root">
             <Counter/>
             <Counter/>
             <h1>Card Example</h1>
-            <Card title="'This is example 1'" content="'This is example 1'"/>
-            <Card title="'This is example 2'" content="'This is example 2'"/>
+            <Card title="'Normal'" content="normalContent"/>
+            <Card title="'Markup'" content="htmlContent"/>
         </div>
     </t>
 </templates>
