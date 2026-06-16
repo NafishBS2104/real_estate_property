@@ -9,6 +9,17 @@ export class Counter extends Component{
       });
     };
     increment(){
-      this.state.value += 2;
+      this.state.value += 1;
+      if(this.props.onChange){
+          this.props.onChange();
+      }
+    };
+
+
+    static props = {
+      onChange:{
+        type: Function,
+          optional: true,
+      },
     };
 }
