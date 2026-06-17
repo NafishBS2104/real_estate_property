@@ -11,9 +11,21 @@
                Sum:
                <t t-esc="state.sum"/>
             </div>
-            <h1>Card Example</h1>
-            <Card title="'Normal'" content="normalContent"/>
-            <Card title="'Markup'" content="htmlContent"/>
+<!--            <h1>Card Example</h1>-->
+<!--            <Card title="'Normal'" content="normalContent"/>-->
+<!--            <Card title="'Markup'" content="htmlContent"/>-->
+
+
+            <h1>Card Example with slots</h1>
+            <div class="d-flex flex-wrap gap-3">
+                <Card title="'Card with Simple Content'">
+                    <p class="text-muted">This is regular text passed into the default slot.</p>
+                </Card>
+
+                <Card title="'Card with counter Sub-component'">
+                    <Counter />
+                </Card>
+            </div>
 
 
             <Todo/>

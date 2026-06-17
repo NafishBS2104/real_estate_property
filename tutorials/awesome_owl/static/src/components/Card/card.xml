@@ -1,4 +1,5 @@
-<template xml:space="preserve">
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
     <t t-name="awesome_owl.Card">
         <div class="card d-inline-block m-2" style="width: 18rem">
             <div class="card-body">
@@ -6,10 +7,10 @@
                     <t t-esc="props.title"/>
                 </h5>
 
-                <p class="card-text">
-                    <t t-out="props.content"/>
-                </p>
+                <div class="card-text">
+                    <t t-slot="default"/>
+                </div>
             </div>
         </div>
     </t>
-</template>
+</templates>
