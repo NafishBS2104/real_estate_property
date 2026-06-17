@@ -5,6 +5,11 @@ export class TodoItem extends Component{
     static template = "awesome_owl.TodoItem";
 
     static props = {
-      todo: Object,
+        todo: Object,
+        toggleState: Function,
     };
+
+    toggleTodo(){
+        this.props.toggleState(this.props.todo.id);
+    }
 }

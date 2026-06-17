@@ -4,52 +4,55 @@ import {TodoItem} from "./todo_item";
 
 
 export class Todo extends Component{
-    static template = xml`
-        <div class="todo-list">
-            <!-- New input field -->
-            <input
-               type="text"
-               placeholder="Enter a new task"
-               t-on-keyup="addTodo"
-               t-ref="input"/>
-
-                <!-- Existing todo list -->
-                <t t-foreach="this.todos" t-as="todo" t-key="todo.id">
-                  <TodoItem todo="todo"/>
-                </t>
-           </div>
-    `;
+   static template = "awesome_owl.TodoList";
 
     static components = {
         TodoItem,
     };
 
     setup(){
-        this.todos = useState([]);
-        this.nextId = 1;
-
-        this.inputRef = useRef('input');
-        onMounted(() => {                    // ← Add this
-            if (this.inputRef.el) {
-                this.inputRef.el.focus();
-            }
-        });
+        this.todos = useState([
+            {
+                id: 1,
+                description: "Writing Code",
+                isCompleted: true,
+            },
+            {
+                id: 2,
+                description: "Reading Document",
+                isCompleted: false,
+            },
+        ]);
+        this.nextId = 3;
     }
 
+    toggleState(id){
+        const todo= this.todos.find(todo => todo.id === id);
+        if(todo){
+           todo.isCompleted = !todo.isCompleted;
+        }
+         }
     addTodo(ev){
         if(ev.keyCode !== 13){
             return;
         }
         const input = ev.target;
         const description = input.value.trim();
+        if(!description){
+            return;
+        }
 
         this.todos.push(
             {
                 id: this.nextId++,
                 description: description,
-                isComplete: false,
+                isCompleted: false,
             }
         );
-        this.value = "";
+        input.value = "";
     }
-}
+
+
+    }
+
+
