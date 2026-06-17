@@ -9,6 +9,7 @@
             <TodoItem
                     todo="todo"
                     toggleState.bind="toggleState"
+                    removeTodo.bind="removeTodo"
             />
         </t>
     </t>

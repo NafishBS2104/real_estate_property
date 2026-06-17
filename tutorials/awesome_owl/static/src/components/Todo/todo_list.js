@@ -52,7 +52,10 @@ export class Todo extends Component{
         input.value = "";
     }
 
-
+        removeTodo(id){
+              const index = this.todos.findIndex(todo => todo.id === id);
+              if(index >= 0){
+                  this.todos.splice(index,1);
+              }
+        }
     }
-
-
