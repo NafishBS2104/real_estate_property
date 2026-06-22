@@ -24,7 +24,7 @@ export class ClickerModel extends Reactive{
                 purchased: 0,
             }
         }
-        this.multilier = 1
+        this.multiplier = 1
 
         document.addEventListener("click",() => this.increment(1), true);
         setInterval(() => {
@@ -74,6 +74,8 @@ export class ClickerModel extends Reactive{
                 }
             }
         }
+        const reward = choose(availableReward);
+        this.bus.trigger("REWARD", reward);
         return choose(availableReward);
     }
 
