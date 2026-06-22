@@ -8,7 +8,7 @@
             </button>
         </div>
         <Notebook>
-            <t t-set-slot="clicks" title="'Clicks'" isVisiable="this.clicker.level >= 1">
+            <t t-set-slot="clicks" title="'Clicks'" isVisible="this.clicker.level >= 1">
                 <div class="ms-1 mt-1">
                     <h2> Bots </h2>
                     <div class="d-flex flex-row">
