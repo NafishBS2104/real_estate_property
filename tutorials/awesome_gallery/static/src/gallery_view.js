@@ -1,4 +1,4 @@
-/** @odoo-module */
+/** @odoo-module **/
 import {registry} from "@web/core/registry";
 import {GalleryController} from "./gallery_controller";
 import {GalleryArchParser} from "./gallery_arch_parser";

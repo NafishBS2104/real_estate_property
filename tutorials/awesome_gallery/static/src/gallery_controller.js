@@ -1,6 +1,7 @@
-/** @odoo-module */
+/** @odoo-module **/
 import {Layout} from "@web/search/layout";
-import {Component} from "@odoo/owl";
+import {useService} from "@web/core/utils/hooks";
+import {Component,onWillStart,onWillUpdateProps,useState} from "@odoo/owl";
 import {standardViewProps} from "@web/views/standard_view_props";
 
 export class GalleryController extends Component{
@@ -10,4 +11,32 @@ export class GalleryController extends Component{
         archInfo: Object,
     };
     static components = {Layout};
+
+    setup(){
+        this.orm = useService("orm");
+        this.image = useState({data: []});
+        onWillStart(async () => {
+            const {records} = await this.loadImages(this.props.domain);
+            this.image.data = records;
+        });
+
+        onWillUpdateProps(async (nextProps) => {
+            if(JSON.stringify(nextProps.domain) !== JSON.stringify(this.props.domain)) {
+                const {records} = await this.loadImages(nextProps.domain);
+                this.image.data = records;
+            }
+        });
+    }
+
+    loadImages(domain){
+        return this.orm.webSearchRead(this.props.resModel,domain,{
+            limit: this.props.archInfo.limit,
+            specification: {
+                [this.props.archInfo.imageField]: {},
+            },
+            context:{
+                bin_size: true,
+            }
+        });
+    }
 }
