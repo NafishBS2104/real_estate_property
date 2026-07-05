@@ -29,7 +29,7 @@
                         <group>
                             <field name="state"/>
                             <field name="postcode"/>
-                            <field name="date_availability"  string="Available From"/>
+                            <field name="date_availability" string="Available From"/>
                         </group>
                         <group>
                             <field name="expected_price"/>
@@ -57,6 +57,28 @@
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+    <record id="estate_property_view_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Search for">
+                <field name="name" string="Title"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area" string="Living Area" filter_domain="[('living_area', '>=', self)]"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="date_availability" string="Available From"/>
+                <separator/>
+                <filter name="available" string="Available" domain="[('state','in',('new','offer_received'))]"/>
+                <filter name="student_pack" string="Student Packs" domain="[('expected_price','&lt;',100000)]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter name="postcode" string="Postcode" context="{'group_by':'postcode'}"/>
+                </group>
+            </search>
         </field>
     </record>
     <record id="estate_property_action" model="ir.actions.act_window">

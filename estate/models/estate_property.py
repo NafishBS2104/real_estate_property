@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    _inherit = "estate.property"
     name = fields.Char(required=True)
     description = fields.Text()
     postcode = fields.Char()
@@ -34,3 +35,4 @@ class EstateProperty(models.Model):
         selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         string="Orientation"
     )
+    property_type_id = fields.Many2one("estate.property.type", string="Property Type")
