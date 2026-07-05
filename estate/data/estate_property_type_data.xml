@@ -1,0 +1,22 @@
+<odoo>
+    <record id="property_type_demo_1" model="estate.property.type">
+        <field name="name">Apartment</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="property_type_demo_2" model="estate.property.type">
+        <field name="name">Slum</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="property_type_demo_3" model="estate.property.type">
+        <field name="name">Renovated</field>
+        <field name="sequence">30</field>
+    </record>
+     <record id="property_type_demo_4" model="estate.property.type">
+            <field name="name">Villa</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="property_type_demo_5" model="estate.property.type">
+            <field name="name">Castle</field>
+            <field name="sequence">50</field>
+        </record>
+</odoo>
