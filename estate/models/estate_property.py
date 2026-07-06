@@ -100,7 +100,6 @@ class EstateProperty(models.Model):
             record.state = 'cancelled'
         return True
 
-    @api.onchange("selling_price")
     @api.constrains('expected_price','selling_price')
     def _validate_selling_price(self):
         for record in self:
