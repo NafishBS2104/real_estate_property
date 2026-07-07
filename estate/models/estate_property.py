@@ -30,6 +30,13 @@ class EstateProperty(models.Model):
     date_availability = fields.Date(string="Available From", copy=False,
                                     default=lambda self: date.today() + relativedelta(months=3))
     expected_price = fields.Float(required=True)
+    _sql_constraints = [
+        (
+            'expected_price',
+            'CHECK(expected_price >= 0.0)',
+            'Expected Price Must Be Positive'
+        )
+    ]
     selling_price = fields.Float(string="Selling Price", copy=False, readonly=True)
     _sql_constraints = [
         (
