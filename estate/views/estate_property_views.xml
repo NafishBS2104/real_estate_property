@@ -3,10 +3,11 @@
         <field name="name">estate.property.list</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <list string="Properties" decoration-success="state in ('offer_received','offer_accepted')" decoration-bf="state=='offer_accepted'" decoration-muted="state=='sold'">
+            <list string="Properties" decoration-success="state in ('offer_received','offer_accepted')"
+                  decoration-bf="state=='offer_accepted'" decoration-muted="state=='sold'">
                 <field name="name" string="Title"/>
                 <field name="postcode"/>
-                <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,cancelled"/>
+                <field name="state"/>
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
                 <field name="property_type_id" widget="many2one_tags"/>
                 <field name="bedrooms"/>
@@ -34,9 +35,11 @@
                     </div>
                     <group>
                         <group>
-                            <field name="state"/>
+                            <field name="state" widget="statusbar"
+                                   statusbar_visible="new,offer_received,offer_accepted,sold,cancelled"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
-                            <field name="property_type_id" widget="many2one_tags" options="{'no_create':True, 'no_edit':True}"/>
+                            <field name="property_type_id" widget="many2one_tags"
+                                   options="{'no_create':True, 'no_edit':True}"/>
                             <field name="postcode"/>
                             <field name="date_availability" string="Available From"/>
                         </group>
@@ -92,6 +95,8 @@
                 <field name="living_area" string="Living Area" filter_domain="[('living_area', '>=', self)]"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
+                <field name="best_price"/>
+                <field name="garden_area"/>
                 <field name="date_availability" string="Available From"/>
                 <separator/>
                 <filter name="available" string="Available" domain="[('state','in',('new','offer_received'))]"/>
@@ -103,10 +108,38 @@
             </search>
         </field>
     </record>
+    <record id="estate_property_view_kanban" model="ir.ui.view">
+        <field name="name">estate.property.kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="property_type_id" records_draggable="false">
+                <field name="state"/>
+                <field name="property_type_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <field name="name"/>
+                            <div> Expected Price : <field name="expected_price"/></div>
+                            <field name="tag_ids"/>
+                            <div t-if="record.state.raw_value == 'offer_received'">
+                                Best Price :
+                                <field name="best_price" string="Best Price"/>
+                            </div>
+                            <div t-if="record.state.raw_value == 'offer_accepted'">
+                                Selling Price :
+                                <field name="selling_price" string="Selling Price"/>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
     <record id="estate_property_action" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="context">{'search_default_available':True}</field>
     </record>
 </odoo>

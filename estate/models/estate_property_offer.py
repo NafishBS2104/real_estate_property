@@ -44,7 +44,7 @@ class EstatePropertyOffer(models.Model):
             record.status = 'accepted'
             record.property_id.buyer_id = record.partner_id
             record.property_id.selling_price = record.price
-            record.property_id.state = 'sold'
+            record.property_id.state = 'offer_accepted'
         return True
 
     def action_refuse(self):
@@ -53,3 +53,12 @@ class EstatePropertyOffer(models.Model):
                 raise UserError('Cannot refuse accepted offer')
             record.status = 'refused'
         return True
+
+    @api.model_create_multi
+    def create(self, data_list):
+        print(f"Data List {data_list}")
+        for data in data_list:
+            property_id = data.get('property_id')
+            property_rec = self.env['estate.property'].browse(property_id)
+            property_rec.state = 'offer_received'
+        return super(EstatePropertyOffer,self).create(data_list)
