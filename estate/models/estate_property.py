@@ -1,3 +1,4 @@
+
 from odoo import fields, models, api
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -7,6 +8,7 @@ from odoo.exceptions import UserError,ValidationError
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    _order ="id desc"
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -28,19 +30,17 @@ class EstateProperty(models.Model):
     date_availability = fields.Date(string="Available From", copy=False,
                                     default=lambda self: date.today() + relativedelta(months=3))
     expected_price = fields.Float(required=True)
-    _sql_constraints = [
-        (
-            'expected_price',
-            'CHECK(expected_price >= 0.0)',
-            'Expected Price Must Be Positive'
-        )
-    ]
     selling_price = fields.Float(string="Selling Price", copy=False, readonly=True)
     _sql_constraints = [
         (
             'selling_price',
             'CHECK(selling_price >= 0.0)',
             'Selling Price Must Be Positive'
+        ),
+        (
+            'expected_price',
+            'CHECK(expected_price >= 0.0)',
+            'Expected Price Must Be Positive'
         )
     ]
     bedrooms = fields.Integer(default=2)
@@ -59,6 +59,7 @@ class EstateProperty(models.Model):
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     total_area = fields.Integer(string="Total Area", compute="_compute_area")
+
 
     @api.depends("living_area", "garden_area")
     def _compute_area(self):

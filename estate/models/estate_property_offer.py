@@ -9,7 +9,8 @@ class EstatePropertyOffer(models.Model):
     _description = 'Estate Property Offers Model'
 
     price = fields.Float()
-    _sql_constrains = [
+    _order = "price desc"
+    _sql_constraints = [
         (
             'price',
             'CHECK(price >= 0)',
@@ -38,7 +39,7 @@ class EstatePropertyOffer(models.Model):
 
     def action_accept(self):
         for record in self:
-            if record.status == 'rejected':
+            if record.status == 'refused':
                 raise UserError('Cannot Accept Refused Offer')
             record.status = 'accepted'
             record.property_id.buyer_id = record.partner_id
