@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="1">
+        <record id="estate_property_villa" model="estate.property">
+            <field name="name">Big Luxury Villa</field>
+            <field name="expected_price">120000</field>
+            <field name="living_area">1120</field>
+            <field name="salesperson_id" ref="base.user_admin"/>
+        </record>
+        <record id="estate_property_villa_1" model="estate.property">
+            <field name="name">Small Luxury Villa</field>
+            <field name="expected_price">120006</field>
+            <field name="living_area">120213</field>
+            <field name="salesperson_id" ref="base.user_admin"/>
+        </record>
+        <record id="estate_property_villa_2" model="estate.property">
+            <field name="name">Big Slum Villa</field>
+            <field name="expected_price">123400</field>
+            <field name="living_area">12093</field>
+            <field name="salesperson_id" ref="base.user_admin"/>
+        </record>
+        <record id="estate_property_villa_3" model="estate.property">
+            <field name="name">Dinosaur Villa</field>
+            <field name="expected_price">1224352</field>
+            <field name="living_area">12</field>
+            <field name="salesperson_id" ref="base.user_admin"/>
+        </record>
+    </data>
+</odoo>
