@@ -10,6 +10,10 @@
     "data":["views/attendance_dashboard_views.xml"],
     "assets":{
         "web.assets_backend":[
+              "attendance_dashboard/static/src/components/employee_card/employee_card.js",
+              "attendance_dashboard/static/src/components/employee_card/employee_card.xml",
+              "attendance_dashboard/static/src/components/employee_card/employee_card.scss",
+            
               "attendance_dashboard/static/src/attendance_dashboard/attendance_dashboard.xml",
               "attendance_dashboard/static/src/attendance_dashboard/attendance_dashboard.js",
               "attendance_dashboard/static/src/attendance_dashboard/attendance_dashboard.scss",

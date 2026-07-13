@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="attendance_dashboard.EmployeeCard" owl="1">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="employee-card shadow-sm">
+                <div class="employee-header">
+                    <h4>
+                        <t t-esc="props.employee.name"/>
+                    </h4>
+                </div>
+
+                <div class="employee-body">
+
+                    <div class="mb-2">
+                        <strong>Today's Hours</strong>
+                        <span t-att-class="hoursClass">
+                            <t t-esc="props.employee.hours.toFixed(2)"/>
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>Check Out:</strong>
+                        <span>
+                            <t t-esc="props.employee.check_out"/>
+                        </span>
+                    </div>
+
+                    <div class="mt-3">
+                        <strong>Status:</strong>
+                        <span
+                            class="fw-bold"
+                            t-att-class="statusClass"
+                            >
+                            <t t-esc="attendanceStatus"/>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

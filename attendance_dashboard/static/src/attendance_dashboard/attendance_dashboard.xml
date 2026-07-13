@@ -4,7 +4,7 @@
 
         <t t-if="state.loading">
             <div class="text-center mt-6">
-                <h2>Loading Attendence...</h2>
+                <h3>Loading Attendence...</h3>
             </div>
         </t>
 
@@ -48,7 +48,7 @@
                             <div class="card-body">
                                 <h5>Total Worked Hours</h5>
                                 <h2>
-                                    <t t-esc="totalHours"/>
+                                    <t t-esc="totalHours.toFixed(2)"/>
                                 </h2>
                             </div>
                         </div>
@@ -69,51 +69,24 @@
 
                 </div>
 
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Employee</th>
-                            <th>Check In</th>
-                            <th>Check Out</th>
-                            <th>Worked Hours</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <t t-if="filteredEmployees.lenght">
-                            <tr
-                                t-foreach="filteredEmployees"
-                                t-as="employee"
-                                t-key="employee.id"
+                <t t-if="filteredEmployees.length">
+                    <div class="row">
+                        <t
+                            t-foreach="filteredEmployees"
+                            t-as="employee"
+                            t-key="employee.id"
                             >
-                                <td>
-                                    <t t-esc="employee.name"/>
-                                </td>
-
-                                <td>
-                                    <t t-esc="employee.check_in"/>
-                                </td>
-
-                                <td>
-                                    <t t-esc="employee.check_out"/>
-                                </td>
-
-                                <td t-att-class="getHoursClass(employee.hours)">
-                                    <t t-esc="employee.hours"/>
-                                </td>
-                            </tr>
+                            <EmployeeCard employee="employee"/>
                         </t>
+                    </div>
+                </t>
 
-                        <t t-else="">
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">
-                                    No attendance records found.
-                                </td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
 
+                <t t-else="">
+                    <div class="alert alert-info text-center">
+                        No attendance records found.
+                    </div>
+                </t>
             </div>
         </t>
     </t>

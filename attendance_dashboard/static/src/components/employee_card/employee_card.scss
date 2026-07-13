@@ -1,0 +1,61 @@
+.employee-card{
+    background: pink;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    height: 100%;
+    }
+
+
+.employee-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+.employee-header{
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    }
+
+.employee-header h4{
+    margin: 0;
+    font-weight: 600;
+    color: #374151;
+    }
+
+.employee-body{
+    font-size: 15px;
+    }
+
+.employee-body strong{
+    color: #374151;
+    }
+
+.hours-green{
+    color: #198754;
+    font-weight: bold;
+    }
+
+.hours-blue{
+    color: #0d6efd;
+    font-weight: bold;
+    }
+
+.hours-red{
+    color: #dc3545;
+    font-weight: bold;
+    }
+
+.text-success{
+    color: #198754;
+    }
+
+.text-primary{
+    color: #0d6efd;
+    }
+
+.text-danger{
+    color: #dc3545;
+    }

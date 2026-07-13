@@ -30,43 +30,8 @@
         font-size: 32px;
         font-weight: bold;
         }
-
-    table{
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
+    .alert{
+        border-radius: 10px;
         }
 
-    thead th{
-        text-align: center;
-        vertical-align: middle;
-        }
-
-    tbody td{
-        text-align: center;
-        vertical-align: middle;
-        }
-
-    tbody tr:hover{
-        background-color: #f8f9fa;
-        }
-
-    .hours-green{
-        color: #198754;
-        font-weight: bold;
-        }
-
-    .hours-blue{
-        color: #0d6efd;
-        font-weight: bold;
-        }
-    .hours-red{
-        color: #dc3545;
-        font-weight: bold;
-        }
-
-    .text-muted{
-        font-size: 16px;
-        padding: 20px;
-        }
-    }
+   }

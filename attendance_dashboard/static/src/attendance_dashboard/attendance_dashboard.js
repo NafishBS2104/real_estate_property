@@ -1,31 +1,20 @@
 import {Component,useState,onWillStart} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
+import {EmployeeCard} from "../components/employee_card/employee_card";
 
 export class AttendanceDashboard extends Component{
 
     static template = "attendance_dashboard.AttendanceDashboard";
+    static components = {
+        EmployeeCard,
+    };
 
     setup(){
         this.orm = useService("orm");
         this.state = useState({
             search: "",
-            employees:[
-              {
-                    id: 1,
-                    name: "John Doe",
-                    check_in: "2026-06-08 09:00:00",
-                    check_out: "2026-06-08 18:00:00",
-                    hours: 9
-                },
-                {
-                    id: 2,
-                    name: "Alice",
-                    check_in: "2026-06-08 08:30:00",
-                    check_out: "2026-06-08 17:30:00",
-                    hours: 9
-                }
-            ],
+            employees:[],
             loading: true,
             error: false,
         });
@@ -56,7 +45,7 @@ export class AttendanceDashboard extends Component{
                 hours: record.worked_hours || 0,
             }));
         } catch (error){
-            console.error(error);
+            console.error("failed to load attendance:",error);
             this.state.error = true;
         } finally{
             this.state.loading = false;
