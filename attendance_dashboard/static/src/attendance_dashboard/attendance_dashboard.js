@@ -1,11 +1,13 @@
-import {Component,useState} from "@odoo/owl";
+import {Component,useState,onWillStart} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+import {useService} from "@web/core/utils/hooks";
 
 export class AttendanceDashboard extends Component{
 
     static template = "attendance_dashboard.AttendanceDashboard";
 
     setup(){
+        this.orm = useService("orm");
         this.state = useState({
             search: "",
             employees:[
@@ -23,8 +25,42 @@ export class AttendanceDashboard extends Component{
                     check_out: "2026-06-08 17:30:00",
                     hours: 9
                 }
-            ]
+            ],
+            loading: true,
+            error: false,
         });
+
+        onWillStart(async () => {
+            await this.loadAttendance();
+        });
+    }
+
+    async loadAttendance(){
+        try{
+            const records = await this.orm.searchRead(
+                "hr.attendance",
+                [],
+                [
+                    "employee_id",
+                    "check_in",
+                    "check_out",
+                    "worked_hours",
+                ]
+            );
+
+            this.state.employees = records.map((record) => ({
+                id: record.id,
+                name: record.employee_id ? record.employee_id[1] : "Unknown",
+                check_in: record.check_in || "-",
+                check_out: record.check_out || "-",
+                hours: record.worked_hours || 0,
+            }));
+        } catch (error){
+            console.error(error);
+            this.state.error = true;
+        } finally{
+            this.state.loading = false;
+        }
     }
 
     get filteredEmployees(){
@@ -41,13 +77,7 @@ export class AttendanceDashboard extends Component{
         return this.filteredEmployees.length;
     }
 
-    get totalEmployees(){
-        return this.filteredEmployees.length;
-    }
 
-    get totalEmployee(){
-        return this.filteredEmployees.length;
-    }
     get totalHours(){
         return this.filteredEmployees.reduce(
         (sum,employee) => sum + employee.hours,

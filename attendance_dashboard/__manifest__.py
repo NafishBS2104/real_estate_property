@@ -6,7 +6,7 @@
     "description": "Attendace Dashboard for employee in Odoo-18",
     "author": "Brain Station 23",
     "license": "LGPL-3",
-    "depends": ["web",],
+    "depends": ["web","hr_attendance",],
     "data":["views/attendance_dashboard_views.xml"],
     "assets":{
         "web.assets_backend":[
